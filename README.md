@@ -17,8 +17,11 @@ This is the implementation of the python code kata [Data Analysis and Visualisat
 
 ## Version
 The library is compatible and it has been tested with python versions:
+
 * 2.7.15
+
 * 3.4.8
+
 * 3.7.1 
 
 ## Footprint
