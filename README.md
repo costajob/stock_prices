@@ -80,10 +80,12 @@ docker run -d -p 8888:8888 stockp
 ```
 
 ## API
-The library exposes a two distinct HTTP APIs at port `8888` (or at the port you bound at server start): 
+The library exposes the following HTTP endpoints at port `8888` (or at the port you bound at server start): 
 
 * [0.0.0.0:8888/](http://0.0.0.0:8888/): returns a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks
 
-* [0.0.0.0:8888/json](http://0.0.0.0:8888/json): returns a JSON data representation of last month stock prices and their forecast for `Corn`, `Gasoline` and `Nasdaq` 
+* [0.0.0.0:8888/fetch](http://0.0.0.0:8888/fetch): fetch a fresh copy of prices for `Corn`, `Gasoline` and `Nasdaq` stocks
+
+* [0.0.0.0:8888/json](http://0.0.0.0:8888/json): returns a JSON data representation of last month stock prices and their forecast for `Corn`, `Gasoline` and `Nasdaq` stocks
 tocks
 
