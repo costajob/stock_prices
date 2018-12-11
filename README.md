@@ -6,9 +6,9 @@
   * [Tests](#tests)
 * [Usage](#usage)
   * [Installation](#installation)
+  * [Start Server](#start-server)
     * [Docker](#docker)
   * [API](#api)
-  * [Start Server](#start-server)
 
 # Scope
 This is the implementation of the python code kata [Data Analysis and Visualisation](https://bitbucket.org/costajob/stock_prices/src/master/OBJECTIVES.md) for financial stock data.
@@ -55,6 +55,19 @@ Install the external dependencies via `pip`:
 pip install -r requirements.txt
 ```
 
+## Start Server
+
+### Development
+To start the WSGI server on development just execute the `main.py` file with the python binary:
+```shell
+python ./main.py
+```
+
+### Production
+To start the server on production use the `gunicorn` executable by spawning as many workers as you need and by specifying the HTTP port:
+```shell
+gunicorn -w 4 -k meinheld.gmeinheld.MeinheldWorker -b :8888 main:Stockp
+```
 ### Docker
 This application can be built and deployed as a [Docker](https://www.docker.com/) container by relying on the `python:3.7.1` official image:
 ```shell
@@ -74,16 +87,3 @@ The library exposes a two distinct HTTP APIs at port `8888` (or at the port you 
 * [0.0.0.0:8888/json](http://0.0.0.0:8888/json): returns a JSON data representation of last month stock prices and their forecast for `Corn`, `Gasoline` and `Nasdaq` 
 tocks
 
-## Start Server
-
-### Development
-To start the WSGI server on development just execute the `main.py` file with the python binary:
-```shell
-python ./main.py
-```
-
-### Production
-To start the server on production use the `gunicorn` executable by spawning as many workers as you need and by specifying the HTTP port:
-```shell
-gunicorn -w 4 -k meinheld.gmeinheld.MeinheldWorker -b :8888 main:Stockp
-```
