@@ -5,15 +5,17 @@ This project aims to collect, visualise and forecast financial data with python.
 In specific we want to download stock closing price for Corn, Gasoline and Nasdaq and plot them on a same chart where at least the 1 month of data is available.
 
 For instance stock prices could be downloaded from:
+
 * [Corn](https://finance.yahoo.com/quote/CORN/history?p=CORN)
+
 * [Gasoline](https://finance.yahoo.com/quote/UGA/history?p=UGA)
+
 * [Nasdaq](https://finance.yahoo.com/quote/NDAQ/history?p=NDAQ)
 
 In addition to the chart, you should also add a table with the next day closing price forecast for each stock. The forecast could be computed as average of the previous 3 days.
 
-Here following a mock-up of the expected output. Please note that the code should not be published on the web.
-
 ## Project requirements
+* Please note that the code should not be published on the web.
 * Please complete this technical assignment within 7 days and send back to us a .zip folder with the code.
 * The project should follow a test-driven-development (TDD) approach.
 * The application must run on a Flask server and the chart should not be a static JPG or PNG image
@@ -48,7 +50,7 @@ pip3 install -t lib -r requirements.txt python3 main.py
 ### Example
 Please use the following example as starting point to develop this project: 
 
-1. Save in a `main.py` file the following:
+#### 1. Save in a `main.py` file the following:
 ```python
 from flask import Flask
 
@@ -62,12 +64,12 @@ if __name__ == "__main__":
     app.run()
 ```
 
-2. Save in a requirements.txt file the following:
+#### 2. Save in a requirements.txt file the following:
 ```txt
 Flask==0.12.2
 ```
 
-3. Finally run it as following:
+#### 3. Finally run it as following:
 ```shell
 pip install -t lib -r requirements.txt
 python main.py
