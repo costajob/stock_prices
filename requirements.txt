@@ -1,4 +1,10 @@
 beautifulsoup4==4.6.3
+Click==7.0
+Flask==1.0.2
 greenlet==0.4.15
 gunicorn==19.9.0
+itsdangerous==1.1.0
+Jinja2==2.10
+MarkupSafe==1.1.0
 meinheld==0.6.1
+Werkzeug==0.14.1

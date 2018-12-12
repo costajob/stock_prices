@@ -1,5 +1,9 @@
 # Table of Contents
 * [Scope](#scope)
+* [Requirements](#requirements)
+  * [Versions](#versions)
+    * [Python 2](#python-2)
+  * [Footprint](#footprint)
 * [Design](#design)
   * [SRP](#srp)
   * [Data](#data)
@@ -18,15 +22,23 @@ This is the implementation of the python code kata [Data Analysis and Visualisat
 
 # Requirements
 
-## Version
-The library is compatible and it has been tested with python versions:
+## Versions
+The library is compatible and it has been tested with the following python versions:
 
 * 3.4.8
 
+* 3.6.4
+
 * 3.7.1 
+
+### Python 2
+Support for `old` python 2 is not guaranteed, since some components makes use of the `concurrent.futures` and `statistics` packages, introduced respectively since version `3.2` and `3.4`.  
+It is possible to grant back-compatibility with version `2.7` by installing the external `futures` package, but it is pointless for the scope of this kata (considering support for version 2 will end on 2020).
 
 ## Footprint
 To grant resiliency (and courtesy of the Python's broad standard library) the external dependencies footprint is kept to a minimum:
+
+* [Flask](http://flask.pocoo.org/): a HTTP microframework, required by objectives (a plain WSGI server would have sufficed)
 
 * [Gunicorn](https://gunicorn.org/): a pre-fork WSGI-compliant HTTP server, used to distribute the load among available cores
 
@@ -42,7 +54,7 @@ The code design follows the single responsibility principle by using a dedicated
 ## Data
 The stock closing data are fetched by remote HTML documents. The fetching is quite inefficient, since the whole document need to be downloaded and scanned in order to collect just last month prices, but the objectives do not advice using APIs, so it's implemented this way.
 
-HTML documents are fetched once at server start and cached at `./stockp/data/corn.html` (etc.) to avoid further network latency. Just delete the cached HTML documents and restart `gunicorn` to fetch fresh copies or use the dedicated API.
+HTML documents are fetched once at server start and cached at `./stockp/data/corn.html` (etc.) to avoid further network latency. Just delete the cached HTML documents and restart `gunicorn` to fetch fresh copies.
 
 ## Tests
 The library is covered, by fast, isolated unit and doc testing (the latter to grant reliable documentation):
@@ -94,9 +106,6 @@ The library exposes the following HTTP endpoints at port `8888` (or at the port 
 
 ### Chart
 [0.0.0.0:8888/](http://0.0.0.0:8888/): returns a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks.
-
-### Fresh
-[0.0.0.0:8888/fresh](http://0.0.0.0:8888/fresh): fetch a fresh copy of prices for `Corn`, `Gasoline` and `Nasdaq` stocks.
 
 ### JSON
 [0.0.0.0:8888/json](http://0.0.0.0:8888/json): returns a JSON data representation of last month stock prices and their forecast for `Corn`, `Gasoline` and `Nasdaq` stocks
