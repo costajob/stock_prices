@@ -4,10 +4,6 @@ from stockp import data
 
 
 class TestData(unittest.TestCase):
-    def test_stock(self):
-        stock = data.Stock('Dec 11, 2018', '16.32', '16.42', '16.299999', '16.32', '16.32', '15,800')
-        self.assertEqual(str(stock), "Stock('2018-12-11', 16.32, 16.42, 16.30, 16.32, 16.32, 15800)")
-
     def test_fetcher(self):
         fetcher = data.Fetcher()
         tree = fetcher('stockp/tests/stubs.html')
