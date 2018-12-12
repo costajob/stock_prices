@@ -76,8 +76,8 @@ class Parser:
     """
     Synopsis
     ========
-    Receive an BeautifulSoup object containing the stock prices in USD and
-    can be iterated as a list of the last month stock rate objects (or by specified limit).
+    Receive an BeautifulSoup object containing the stock prices in USD and returns
+    an iterable with last month stock specified entity objects (or by specified limit).
 
     Examples
     ========
@@ -90,13 +90,13 @@ class Parser:
 
     LIMIT = 30
 
-    def __init__(self, tree, stock_cls=Stock, limit=LIMIT):
+    def __init__(self, tree, entity=Stock, limit=LIMIT):
         self.tree = tree
         self.limit = int(limit)
-        self.stock_cls = stock_cls
+        self.entity = entity
 
     def __iter__(self):
         for row in self.tree.tbody.find_all('tr')[:self.limit]:
             cells = row.find_all('td')
             data = tuple(cell.get_text() for cell in cells)
-            yield self.stock_cls(*data)
+            yield self.entity(*data)
