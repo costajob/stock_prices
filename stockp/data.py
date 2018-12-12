@@ -82,13 +82,14 @@ class Downloader:
     Synopsis
     ========
     Fetch multiple HTML documents by relying on multi-threading non blocking I/O.
-    Accepts a list of URLs, from which to extract document name and call the specified
-    action in parallel.
+    Accepts a list of URLs, from which to extract document name and returns
+    an iterator by executing in parallel the specified callable.
 
     Examples
     ========
-    >>> downloader = Downloader()
-    >>> [doc.split('/')[-1] for doc in downloader.docs]
+    >>> action = lambda doc, _: doc.split('/')[-1]
+    >>> downloader = Downloader(action=action)
+    >>> list(downloader)
     ['corn.html', 'uga.html', 'ndaq.html']
     """
 
@@ -102,11 +103,12 @@ class Downloader:
         self.workers = len(self.urls)
         self.action = action
 
-    def __call__(self):
+    def __iter__(self):
          args = zip(self.docs, self.urls)
          with ThreadPoolExecutor(max_workers=self.workers) as executor:
              for doc, url in args:
-                 executor.submit(self.action, doc, url)
+                 future = executor.submit(self.action, doc, url)
+                 yield future.result()
 
     def _doc(self, url, _path):
         name = str(url).split('=')[-1].lower()
