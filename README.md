@@ -51,6 +51,12 @@ To grant resiliency (and courtesy of the Python's broad standard library) the ex
 ## SRP
 The code design follows the single responsibility principle by using a dedicated class for any specific task. Each class is confined within meaningful modules:
 
+* `data`: data related objects, such as `Fetcher`, `Parser` and `Downloader`
+
+* `entity`: plain value objects, such as `Stock`
+
+* `computer`: core logic objects, such as `Forecaster`
+
 ## Data
 The stock closing data are fetched by remote HTML documents. The fetching is quite inefficient, since the whole document need to be downloaded and scanned in order to collect just last month prices, but the objectives do not advice using APIs, so it's implemented this way.
 
