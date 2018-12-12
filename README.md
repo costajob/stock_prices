@@ -60,9 +60,9 @@ HTML documents are fetched once at server start and cached at `./stockp/data/cor
 The library is covered, by fast, isolated unit and doc testing (the latter to grant reliable documentation):
 ```shell
 python -m unittest discover -s stockp -p '*'
-..................
+..........
 ----------------------------------------------------------------------
-Ran 19 tests in 0.008s
+Ran 10 tests in 0.166s
 
 OK
 ```
@@ -87,7 +87,7 @@ python ./main.py
 ### Production
 To start the server on production use the `gunicorn` executable by spawning as many workers as you need and by specifying the HTTP port:
 ```shell
-gunicorn -w 4 -k meinheld.gmeinheld.MeinheldWorker -b :8888 main:Stockp
+gunicorn -w 4 -k meinheld.gmeinheld.MeinheldWorker -b :8888 main:App
 ```
 
 ### Docker
