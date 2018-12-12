@@ -8,7 +8,10 @@
   * [Installation](#installation)
   * [Start Server](#start-server)
     * [Docker](#docker)
-  * [API](#api)
+  * [APIs](#apis)
+    * [Chart](#chart)
+    * [Fresh](#fresh)
+    * [JSON](#json)
 
 # Scope
 This is the implementation of the python code kata [Data Analysis and Visualisation](https://bitbucket.org/costajob/stock_prices/src/master/OBJECTIVES.md) for financial stock data.
@@ -18,14 +21,18 @@ This is the implementation of the python code kata [Data Analysis and Visualisat
 ## Version
 The library is compatible and it has been tested with python versions:
 
-* 2.7.15
-
 * 3.4.8
 
 * 3.7.1 
 
 ## Footprint
-To grant resiliency (and courtesy of the Python's broad standard library) the external dependencies footprint is kept to a minimum, but for `gunicorn` and `meinheld` libraries, which are used to wrap the WSGI HTTP server in order to augment throughput.
+To grant resiliency (and courtesy of the Python's broad standard library) the external dependencies footprint is kept to a minimum:
+
+* [Gunicorn](https://gunicorn.org/): a pre-fork WSGI-compliant HTTP server, used to distribute the load among available cores
+
+* [Meinheld](http://meinheld.org/): a WSGI-compliant Web server, based on green threads and asynchronous network I/O to reduce latency
+
+* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/): an HTML parser library aimed at screen-scraping
 
 # Design
 
@@ -33,7 +40,9 @@ To grant resiliency (and courtesy of the Python's broad standard library) the ex
 The code design follows the single responsibility principle by using a dedicated class for any specific task. Each class is confined within meaningful modules:
 
 ## Data
-The stock closing data are fetched by a remote HTML documents. The documents are fetched once at server start and cached at `./stockp/data/corn.html` (etc.) to avoid further network latency. Just delete the cached HTML documents and restart `gunicorn` to fetch fresh copies.
+The stock closing data are fetched by remote HTML documents. The fetching is quite inefficient, since the whole document need to be downloaded and scanned in order to collect just last month prices, but the objectives do not advice using APIs, so it's implemented this way.
+
+HTML documents are fetched once at server start and cached at `./stockp/data/corn.html` (etc.) to avoid further network latency. Just delete the cached HTML documents and restart `gunicorn` to fetch fresh copies or use the dedicated API.
 
 ## Tests
 The library is covered, by fast, isolated unit and doc testing (the latter to grant reliable documentation):
@@ -68,6 +77,7 @@ To start the server on production use the `gunicorn` executable by spawning as m
 ```shell
 gunicorn -w 4 -k meinheld.gmeinheld.MeinheldWorker -b :8888 main:Stockp
 ```
+
 ### Docker
 This application can be built and deployed as a [Docker](https://www.docker.com/) container by relying on the `python:3.7.1` official image:
 ```shell
@@ -79,13 +89,15 @@ Once the container has been built, just run it by:
 docker run -d -p 8888:8888 stockp
 ```
 
-## API
+## APIs
 The library exposes the following HTTP endpoints at port `8888` (or at the port you bound at server start): 
 
-* [0.0.0.0:8888/](http://0.0.0.0:8888/): returns a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks
+### Chart
+[0.0.0.0:8888/](http://0.0.0.0:8888/): returns a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks.
 
-* [0.0.0.0:8888/fetch](http://0.0.0.0:8888/fetch): fetch a fresh copy of prices for `Corn`, `Gasoline` and `Nasdaq` stocks
+### Fresh
+[0.0.0.0:8888/fresh](http://0.0.0.0:8888/fresh): fetch a fresh copy of prices for `Corn`, `Gasoline` and `Nasdaq` stocks.
 
-* [0.0.0.0:8888/json](http://0.0.0.0:8888/json): returns a JSON data representation of last month stock prices and their forecast for `Corn`, `Gasoline` and `Nasdaq` stocks
-tocks
-
+### JSON
+[0.0.0.0:8888/json](http://0.0.0.0:8888/json): returns a JSON data representation of last month stock prices and their forecast for `Corn`, `Gasoline` and `Nasdaq` stocks
+tocks.
