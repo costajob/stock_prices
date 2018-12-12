@@ -13,9 +13,6 @@
   * [Start Server](#start-server)
     * [Docker](#docker)
   * [APIs](#apis)
-    * [Chart](#chart)
-    * [Fresh](#fresh)
-    * [JSON](#json)
 
 # Scope
 This is the implementation of the python code kata [Data Analysis and Visualisation](https://bitbucket.org/costajob/stock_prices/src/master/OBJECTIVES.md) for financial stock data.
@@ -110,9 +107,9 @@ docker run -d -p 8888:8888 stockp
 ## APIs
 The library exposes the following HTTP endpoints at port `8888` (or at the port you bound at server start): 
 
-### Chart
-[0.0.0.0:8888/](http://0.0.0.0:8888/): returns a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks.
+### [0.0.0.0:8888/](http://0.0.0.0:8888/)
+Returns a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks.
 
-### JSON
-[0.0.0.0:8888/json](http://0.0.0.0:8888/json): returns a JSON data representation of last month stock prices and their forecast for `Corn`, `Gasoline` and `Nasdaq` stocks
-tocks.
+### [0.0.0.0:8888/json](http://0.0.0.0:8888/json)
+Returns a JSON data representation of last month stock prices for `Corn`, `Gasoline` and `Nasdaq` stocks.
+
