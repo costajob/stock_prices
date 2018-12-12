@@ -60,9 +60,8 @@ class Downloader:
         self.action = action
 
     def __iter__(self):
-         args = zip(self.docs, self.urls)
          with ThreadPoolExecutor(max_workers=self.workers) as executor:
-             for doc, url in args:
+             for doc, url in zip(self.docs, self.urls):
                  future = executor.submit(self.action, doc, url)
                  yield future.result()
 
