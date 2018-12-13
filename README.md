@@ -56,7 +56,7 @@ The code design follows the single responsibility principle by using a dedicated
 
 * `entity`: plain value objects, such as `Stock`
 
-* `computer`: core logic objects, such as `Forecaster`
+* `computer`: computation logic objects, such as `Forecaster` and `Global`
 
 ## Data
 The stock closing data are fetched by remote HTML documents. The fetching is quite inefficient, since the whole document need to be downloaded and scanned in order to collect just last month prices, but the objectives do not advise of any available APIs.  
