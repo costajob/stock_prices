@@ -31,7 +31,6 @@ The library is compatible and it has been tested with the following python versi
 
 ### Python 2
 Support for `old` python 2 is not guaranteed, since some components makes use of the `concurrent.futures` introduced on standard library since version `3.2`.  
-It is possible to grant back-compatibility with version `2.7` by installing the external `futures` package, but it is pointless for the scope of this kata (considering support will end on 2020).
 
 ## Chart
 The [chart.js](https://www.chartjs.org/) library is used in order to plot data into a non-static chart.  
