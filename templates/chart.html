@@ -1,0 +1,41 @@
+<!doctype html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+          type: "line",
+          data: {
+              labels: Array({{limit}}).join(".").split("."),
+              datasets:[
+                  {% for color, data in stocks -%}
+                  {
+                      pointRadius: 0,
+                      label: "",
+                      data: {{data}},
+                      fill: false,
+                      borderColor: "{{color}}"
+                  },
+                  {%- endfor %}
+              ]
+          },
+          options: {
+              legend: { display: false },
+              animation: { duration: 0 }
+          }
+      });
+</script>
+
+<table>
+    <tr>
+        <td colspan=2><h3>Closing price forecast</h3></td>
+    </tr>
+    {% for name, forecast in forecasts -%}
+    <tr>
+        <td>{{name.capitalize()}}:</td>
+        <td>{{'%.2f' % forecast}}</td>
+    </tr>
+    {%- endfor %}
+</table>

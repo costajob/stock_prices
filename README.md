@@ -3,6 +3,7 @@
 * [Requirements](#requirements)
   * [Versions](#versions)
     * [Python 2](#python-2)
+  * [Chart](#chart)
   * [Footprint](#footprint)
 * [Design](#design)
   * [SRP](#srp)
@@ -12,7 +13,7 @@
   * [Installation](#installation)
   * [Start Server](#start-server)
     * [Docker](#docker)
-  * [APIs](#apis)
+  * [API](#api)
 
 # Scope
 This is the implementation of the python code kata [Data Analysis and Visualisation](https://bitbucket.org/costajob/stock_prices/src/master/OBJECTIVES.md) for financial stock data.
@@ -32,16 +33,20 @@ The library is compatible and it has been tested with the following python versi
 Support for `old` python 2 is not guaranteed, since some components makes use of the `concurrent.futures` introduced on standard library since version `3.2`.  
 It is possible to grant back-compatibility with version `2.7` by installing the external `futures` package, but it is pointless for the scope of this kata (considering support will end on 2020).
 
+## Chart
+The [chart.js](https://www.chartjs.org/) library is used in order to plot data into a non-static chart.  
+The minimized script is loaded by an external `CDN`, thus requiring a network connection to properly works.
+
 ## Footprint
 To grant resiliency (and courtesy of the Python's broad standard library) the external dependencies footprint is kept to a minimum:
 
-* [Flask](http://flask.pocoo.org/): a HTTP microframework, required by objectives (a plain WSGI server would have sufficed)
+* [Flask](http://flask.pocoo.org/): a WSGI-compliant HTTP micro-framework, required by objectives 
 
 * [Gunicorn](https://gunicorn.org/): a pre-fork WSGI-compliant HTTP server, used to distribute the load among available cores
 
 * [Meinheld](http://meinheld.org/): a WSGI-compliant Web server, based on green threads and asynchronous network I/O to reduce latency
 
-* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/): an HTML parser library aimed at screen-scraping
+* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/): a HTML parser library aimed at screen-scraping
 
 # Design
 
@@ -84,13 +89,13 @@ pip install -r requirements.txt
 ### Development
 To start the WSGI server on development just execute the `main.py` file with the python binary:
 ```shell
-python ./main.py
+python main.py
 ```
 
 ### Production
 To start the server on production use the `gunicorn` executable by spawning as many workers as you need and by specifying the HTTP port:
 ```shell
-gunicorn -w 4 -k meinheld.gmeinheld.MeinheldWorker -b :8888 main:App
+gunicorn -w 4 -k meinheld.gmeinheld.MeinheldWorker -b :8888 main:app
 ```
 
 ### Docker
@@ -104,12 +109,5 @@ Once the container has been built, just run it by:
 docker run -d -p 8888:8888 stockp
 ```
 
-## APIs
-The library exposes the following HTTP endpoints at port `8888` (or at the port you bound at server start): 
-
-### [0.0.0.0:8888/](http://0.0.0.0:8888/)
-Returns a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks.
-
-### [0.0.0.0:8888/json](http://0.0.0.0:8888/json)
-Returns a JSON data representation of last month stock prices for `Corn`, `Gasoline` and `Nasdaq` stocks.
-
+## API
+The library exposes a single [HTTP endpoint](http://0.0.0.0:8888/) at port `8888` (or at the port you bound at server start), which renders a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks:
