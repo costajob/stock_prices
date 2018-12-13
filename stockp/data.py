@@ -50,7 +50,7 @@ class Downloader:
     """
 
     URLS = ('https://finance.yahoo.com/quote/CORN/history?p=CORN', 'https://finance.yahoo.com/quote/UGA/history?p=UGA', 'https://finance.yahoo.com/quote/NDAQ/history?p=NDAQ')
-    PATH = 'stockp/data/'
+    PATH = 'cache/'
     EXT = 'html'
 
     def __init__(self, urls=URLS, _path=PATH, action=Fetcher()):
@@ -75,8 +75,9 @@ class Parser:
     """
     Synopsis
     ========
-    Receive an BeautifulSoup object containing the stock prices in USD and can be
-    iterated over a slice of specified entity objects.
+    Receive an BeautifulSoup object containing the stock prices in USD.
+    The instance can be iterated over a (limited) enumerable of specified 
+    entity objects.
 
     Examples
     ========
@@ -95,7 +96,14 @@ class Parser:
         self.entity = entity
 
     def __iter__(self):
-        for row in self.tree.tbody.find_all('tr')[:self.limit]:
+        count = 0
+        for row in self.tree.tbody.find_all('tr'):
+            if count == self.limit:
+                break
             cells = row.find_all('td')
             data = tuple(cell.get_text() for cell in cells)
-            yield self.entity(*data)
+            try:
+                yield self.entity(*data)
+                count += 1
+            except ValueError as e:
+                logger.error('parsed data error on %r: %s', data, e)

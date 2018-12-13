@@ -22,7 +22,7 @@ class Stock:
     FORMAT = '%b %d, %Y'
 
     __slots__ = ('date', '_open', 'high', 'low', 'close', 'adj', 'volume')
-
+        
     def __init__(self, date, _open=.0, high=.0, low=.0, 
                  close=.0, adj=.0, volume=0):
         self.date = datetime.strptime(date, self.FORMAT).date()

@@ -60,8 +60,8 @@ The code design follows the single responsibility principle by using a dedicated
 * `computer`: core logic objects, such as `Forecaster`
 
 ## Data
-The stock closing data are fetched by remote HTML documents. The fetching is quite inefficient, since the whole document need to be downloaded and scanned in order to collect just last month prices, but the objectives do not advice using APIs, so it's implemented this way.  
-HTML documents are fetched once at server start and cached at `./stockp/data/corn.html` (etc.) to avoid further network latency. Just delete the cached HTML documents and restart `gunicorn` to fetch fresh copies.
+The stock closing data are fetched by remote HTML documents. The fetching is quite inefficient, since the whole document need to be downloaded and scanned in order to collect just last month prices, but the objectives do not advise of any available APIs.  
+HTML documents are fetched once at server start and cached at `./cache/corn.html` (etc.) to avoid further network latency. Just delete the cached HTML documents and restart `gunicorn` to fetch fresh copies.
 
 ## Tests
 The library is covered, by fast, isolated unit and doc testing (the latter to grant reliable documentation):

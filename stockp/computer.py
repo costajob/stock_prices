@@ -1,4 +1,5 @@
 from json import dumps
+from os import environ
 from stockp.data import Downloader, Parser
 
 
