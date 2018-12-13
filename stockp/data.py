@@ -38,8 +38,8 @@ class Downloader:
     Synopsis
     ========
     Fetch multiple HTML documents by relying on multi-threading non blocking I/O.
-    Accepts a list of URLs, from which to extract document name and returns
-    an iterator by executing the specified callable in parallel (via threads).
+    Accepts a list of URLs, from which to extract document name and can be
+    iterated by executing the specified callable in parallel (via threads).
 
     Examples
     ========
@@ -75,8 +75,8 @@ class Parser:
     """
     Synopsis
     ========
-    Receive an BeautifulSoup object containing the stock prices in USD and returns
-    an iterable with last month stock specified entity objects (or by specified limit).
+    Receive an BeautifulSoup object containing the stock prices in USD and can be
+    iterated over a slice of specified entity objects.
 
     Examples
     ========

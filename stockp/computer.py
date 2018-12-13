@@ -1,3 +1,7 @@
+from json import dumps
+from stockp.data import Downloader, Parser
+
+
 class Forecaster:
     """
     Synopsis
@@ -29,3 +33,40 @@ class Forecaster:
 
     def __call__(self):
         return sum(self.data) / self.limit 
+
+
+class Global:
+    """
+    Synopsis
+    ========
+    A data object aimed to be used as a global configuration (instantiated once)
+    and avoid downloading and fetching on each server request.
+    Can be iterated to fetch a tuple of properties.
+    """
+
+    __instance = None
+
+    COLORS = ('green', 'red', 'blue')
+    LABELS = ('corn', 'gasoline', 'nasdaq')
+
+    def __init__(self, downloader=Downloader, parser=Parser, forecaster=Forecaster):
+        self.downloader = downloader
+        self.parser = parser
+        self.forecaster = forecaster
+        self.stocks = self._stocks()
+        self.forecasts = self._forecasts()
+
+    def __iter__(self):
+        return (e for e in (self.parser.LIMIT, zip(self.COLORS, self._prices()), zip(self.LABELS, self.forecasts)))
+
+    def _prices(self):
+        return (dumps([float(e) for e in entities]) for entities in self.stocks)
+
+    def _stocks(self):
+        return [list(self.parser(tree)) for tree in self.downloader()]
+
+    def _forecasts(self):
+        return [self.forecaster(entities)() for entities in self.stocks]
+
+
+GLOBAL = Global()
