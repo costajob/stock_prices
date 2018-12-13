@@ -14,6 +14,7 @@
   * [Start Server](#start-server)
     * [Docker](#docker)
   * [API](#api)
+* [Performance](#performance)
 
 # Scope
 This is the implementation of the python code kata [Data Analysis and Visualisation](https://bitbucket.org/costajob/stock_prices/src/master/OBJECTIVES.md) for financial stock data.
@@ -109,3 +110,17 @@ docker run -d -p 8888:8888 stockp
 
 ## API
 The library exposes a single [HTTP endpoint](http://127.0.0.1:8888/) at port `8888` (or at the port you bound at server start), which renders a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks:
+
+# Performance
+Courtesy of the `gunicorn` and `meinheld` it is possible to squeeze decent throughput by stressing the server via the `wrk` tool:
+```shell
+wrk -t 4 -c 100 -d30s --timeout 2000 http://127.0.0.1:8888
+Running 30s test @ http://127.0.0.1:8888
+  4 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    11.10ms    3.62ms  51.38ms   75.78%
+    Req/Sec     2.27k   268.19     2.85k    68.08%
+  271111 requests in 30.01s, 584.07MB read
+Requests/sec:   9034.28
+Transfer/sec:     19.46MB
+```
