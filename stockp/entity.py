@@ -1,5 +1,4 @@
 from datetime import datetime
-from json import dumps
 
 
 class Stock:
@@ -33,11 +32,6 @@ class Stock:
         self.close = float(close)
         self.adj = float(adj)
         self.volume = self._int(volume)
-
-    @property
-    def payload(self):
-        payload = {k.replace('_', ''): v for k, v in zip(self.__slots__, iter(self))}
-        return dumps(payload, default=str)
 
     def __repr__(self):
         data = (self.__class__.__name__, ) + tuple(self)

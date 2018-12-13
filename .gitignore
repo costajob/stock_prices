@@ -8,3 +8,4 @@ __pycache__/
 
 # virtual environment
 .stockp
+.python-version
