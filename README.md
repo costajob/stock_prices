@@ -110,4 +110,4 @@ docker run -d -p 8888:8888 stockp
 ```
 
 ## API
-The library exposes a single [HTTP endpoint](http://0.0.0.0:8888/) at port `8888` (or at the port you bound at server start), which renders a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks:
+The library exposes a single [HTTP endpoint](http://127.0.0.1:8888/) at port `8888` (or at the port you bound at server start), which renders a HTML chart representation of last month stock prices and their forecast for `Nasdaq`, `Corn` and `Gasoline` stocks:
