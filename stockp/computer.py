@@ -68,6 +68,3 @@ class Global:
 
     def _forecasts(self):
         return [self.forecaster(entities)() for entities in self.stocks]
-
-
-GLOBAL = Global()

@@ -1,7 +1,7 @@
+from stockp.computer import Global
 from flask import Flask, render_template
-from stockp.computer import GLOBAL
 
-
+GLOBAL = Global()
 app = Flask(__name__)
 
 @app.route('/')
