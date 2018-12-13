@@ -29,8 +29,8 @@ The library is compatible and it has been tested with the following python versi
 * 3.7.1 
 
 ### Python 2
-Support for `old` python 2 is not guaranteed, since some components makes use of the `concurrent.futures` and `statistics` packages, introduced respectively since version `3.2` and `3.4`.  
-It is possible to grant back-compatibility with version `2.7` by installing the external `futures` package, but it is pointless for the scope of this kata (considering support for version 2 will end on 2020).
+Support for `old` python 2 is not guaranteed, since some components makes use of the `concurrent.futures` introduced on standard library since version `3.2`.  
+It is possible to grant back-compatibility with version `2.7` by installing the external `futures` package, but it is pointless for the scope of this kata (considering support will end on 2020).
 
 ## Footprint
 To grant resiliency (and courtesy of the Python's broad standard library) the external dependencies footprint is kept to a minimum:

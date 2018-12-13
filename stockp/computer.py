@@ -1,6 +1,3 @@
-from statistics import mean
-
-
 class Forecaster:
     """
     Synopsis
@@ -19,7 +16,7 @@ class Forecaster:
 
     def __init__(self, entities, limit=LIMIT):
         self.entities = entities
-        self.limit = int(limit)
+        self.limit = float(limit)
 
     @property
     def data(self):
@@ -31,4 +28,4 @@ class Forecaster:
         return data
 
     def __call__(self):
-        return mean(self.data)
+        return sum(self.data) / self.limit 
