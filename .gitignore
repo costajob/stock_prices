@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# distrubution files
+dist/
+build/
+*.egg-info/
+
 # virtual environment
 .stockp
 .python-version
